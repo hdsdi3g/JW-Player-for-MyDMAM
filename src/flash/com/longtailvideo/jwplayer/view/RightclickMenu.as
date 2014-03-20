@@ -58,12 +58,12 @@ package com.longtailvideo.jwplayer.view {
 		}
 		
 		protected function setAboutText():void {
-			about = new ContextMenuItem('About JW Player ' + _player.version + '...');
+			about = new ContextMenuItem('MyDMAM JW Player...');
 		}
 
 		/** jump to the about page. **/
 		protected function aboutHandler(evt:ContextMenuEvent):void {
-			navigateToURL(new URLRequest('http://www.longtailvideo.com/jwpabout/?a=r&v='+PlayerVersion.version+'&m=f&e=o'), '_top');
+			navigateToURL(new URLRequest('http://mydmam.org/developments/jwplayer-licence/'), '_top');
 		}
 
 		/** change the debug system. **/

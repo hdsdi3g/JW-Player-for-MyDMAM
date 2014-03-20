@@ -6,7 +6,6 @@ package com.longtailvideo.jwplayer.view {
 	import com.longtailvideo.jwplayer.view.components.ControlbarComponent;
 	import com.longtailvideo.jwplayer.view.components.DisplayComponent;
 	import com.longtailvideo.jwplayer.view.components.DockComponent;
-	import com.longtailvideo.jwplayer.view.components.LogoComponent;
 	import com.longtailvideo.jwplayer.view.components.PlaylistComponent;
 	import com.longtailvideo.jwplayer.view.interfaces.IControlbarComponent;
 	import com.longtailvideo.jwplayer.view.interfaces.IDisplayComponent;
@@ -20,19 +19,15 @@ package com.longtailvideo.jwplayer.view {
 		protected var _display:IDisplayComponent;
 		protected var _dock:IDockComponent;
 		protected var _playlist:IPlaylistComponent;
-		protected var _logo:LogoComponent;
 		protected var _config:PlayerConfig;
 		protected var _skin:ISkin;
 		protected var _player:IPlayer;
 		protected var _captions:CaptionsComponent;
 		
-		protected static var logoClass:Class;
-		
 		/**
 		 * @inheritDoc
 		 */
 		public function PlayerComponents(player:IPlayer) {
-			if (!logoClass)  logoClass = LogoComponent;
 			_player = player;
 			_skin = player.skin;
 			_config = player.config;
@@ -45,11 +40,6 @@ package com.longtailvideo.jwplayer.view {
 			_playlist = new PlaylistComponent(_player);
 			_dock = new DockComponent(_player);
 			_captions = new CaptionsComponent(_player);
-			setupLogo();
-		}
-		
-		protected function setupLogo():void {
-			_logo = new logoClass(_player);
 		}
 		
 		/**
@@ -86,13 +76,6 @@ package com.longtailvideo.jwplayer.view {
 		/**
 		 * @inheritDoc
 		 */
-		public function get logo():IPlayerComponent {
-			return _logo;
-		}
-
-		/**
-		 * @inheritDoc
-		 */
 		public function get captions():CaptionsComponent {
 			return _captions;
 		}
@@ -104,21 +87,10 @@ package com.longtailvideo.jwplayer.view {
 		public function redraw():void {
 			var cbConfig:PluginConfig = _config.pluginConfig('controlbar'); 
 			var dockConfig:PluginConfig = _config.pluginConfig('dock'); 
-			var logoConfig:PluginConfig = _config.pluginConfig('logo'); 
 
 			resizeComponent(_controlbar, cbConfig);
 			resizeComponent(_display, _config.pluginConfig('display'));
 			resizeComponent(_playlist, _config.pluginConfig('playlist'));
-			resizeComponent(_logo, logoConfig);
-
-			if (_logo.position.indexOf("bottom") == 0) {
-				logoConfig.height -= (_controlbar.height + cbConfig.margin);
-				resizeComponent(_logo, logoConfig);
-			} else if (_logo.position == "top-left") {
-				dockConfig.width -= (_logo.width);
-				dockConfig.x = _logo.width + _logo.margin;
-			}
-			
 			resizeComponent(_dock, dockConfig);
 
 			resizeComponent(_captions, _config.pluginConfig('display'));

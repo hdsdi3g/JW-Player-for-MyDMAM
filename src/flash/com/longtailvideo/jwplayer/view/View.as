@@ -21,7 +21,6 @@ package com.longtailvideo.jwplayer.view {
 	import com.longtailvideo.jwplayer.utils.Stretcher;
 	import com.longtailvideo.jwplayer.view.components.ControlbarComponent;
 	import com.longtailvideo.jwplayer.view.components.DockComponent;
-	import com.longtailvideo.jwplayer.view.components.LogoComponent;
 	import com.longtailvideo.jwplayer.view.components.PlaylistComponent;
 	import com.longtailvideo.jwplayer.view.interfaces.IPlayerComponent;
 	import com.longtailvideo.jwplayer.view.interfaces.ISkin;
@@ -87,7 +86,6 @@ package com.longtailvideo.jwplayer.view {
 		protected var _displayMasker:MovieClip;
 		
 		protected var _image:Loader;
-		//protected var _logo:LogoComponent;
 
 		protected var layoutManager:PlayerLayoutManager;
 
@@ -204,8 +202,6 @@ package com.longtailvideo.jwplayer.view {
 			components.controlbar.addEventListener(MouseEvent.MOUSE_OUT, resumeFade);
 			components.dock.addEventListener(MouseEvent.MOUSE_OVER, preventFade);
 			components.dock.addEventListener(MouseEvent.MOUSE_OUT, resumeFade);
-			components.logo.addEventListener(MouseEvent.MOUSE_OVER, preventFade);
-			components.logo.addEventListener(MouseEvent.MOUSE_OUT, resumeFade);
 			components.captions.addEventListener(CaptionsEvent.JWPLAYER_CAPTIONS_CHANGED, forward);
 			components.captions.addEventListener(CaptionsEvent.JWPLAYER_CAPTIONS_LIST, forward);
 		}
@@ -354,7 +350,6 @@ package com.longtailvideo.jwplayer.view {
 			setupComponent(_components.display, n++);
 			_playlist = _components.playlist;
 			_playlistLayer.addChild(_playlist as DisplayObject);
-			setupComponent(_components.logo, n++);
 			setupComponent(_components.controlbar, n++);
 			setupComponent(_components.dock, n++);
 		}
@@ -399,7 +394,6 @@ package com.longtailvideo.jwplayer.view {
 				_components.controlbar.resize(_player.config.width, _player.config.height);
 				_components.display.hide();
 				_components.dock.hide();
-				_components.logo.hide(true);
 				_components.captions.hide();
 				hideImage();
 				_mediaFade.fade(0);
@@ -419,7 +413,6 @@ package com.longtailvideo.jwplayer.view {
 					if (_completeState) _components.dock.show();
 				}
 				_components.controlbar.audioMode(false);
-				_components.logo.show();
 				showMedia();
 			}
 			
@@ -453,12 +446,6 @@ package com.longtailvideo.jwplayer.view {
 			_instreamLayer.graphics.endFill();
 			
 				
-/*			if (_logo) {
-				_logo.x = _components.display.x;
-				_logo.y = _components.display.y;
-				_logo.resize(_player.config.width, _player.config.height);
-			}
-*/
 //			for (var i:Number = 0; i < _pluginsLayer.numChildren; i++) {
 			for each (var plug:IPlugin in _allPlugins) {
 //				var plug:IPlugin = _pluginsLayer.getChildAt(i) as IPlugin;
@@ -712,7 +699,6 @@ package com.longtailvideo.jwplayer.view {
 				case PlayerState.IDLE:
 					hideControls();
 					components.dock.show();
-					components.logo.show();
 					components.controlbar.hideFullscreen(false);
 					imageDelay.start();
 					break;
@@ -847,7 +833,6 @@ package com.longtailvideo.jwplayer.view {
 			_components.controlbar.hide();
 			if (_player.state != PlayerState.IDLE) {
 				_components.dock.hide();
-				_components.logo.hide(audioMode);
 			}
 		}
 		
@@ -856,7 +841,6 @@ package com.longtailvideo.jwplayer.view {
 				_components.controlbar.show();
 				_components.dock.show();
 			}
-			if (!audioMode) _components.logo.show();
 		}
 		
 		/** If the mouse leaves the stage, hide the controlbar if position is 'over' **/
@@ -898,18 +882,15 @@ package com.longtailvideo.jwplayer.view {
 		
 		public function getSafeRegion():Rectangle {
 			var bounds:Rectangle = new Rectangle();
-			var logo:LogoComponent = _components.logo as LogoComponent;
 			var dock:DockComponent = _components.dock as DockComponent;
 			var dockShowing:Boolean = (dock.numButtons > 0);
 			var cb:ControlbarComponent = _components.controlbar as ControlbarComponent;
-			var logoTop:Boolean = (logo.position.indexOf("top") == 0);
-			var logoShowing:Boolean = (logo.height > 0);
 			
 			if (_model.config.controls) {
 				bounds.x = 0;
-				bounds.y = Math.round(Math.max(dockShowing ? dock.getBounds(_componentsLayer).bottom : 0, (logoTop && logoShowing) ? logo.getBounds(_componentsLayer).bottom : 0));
+				bounds.y = Math.round(Math.max(dockShowing ? dock.getBounds(_componentsLayer).bottom : 0, 0));
 				bounds.width = Math.round(_components.display.width);
-				bounds.height = Math.round((logoTop ? cb.getBounds(_componentsLayer).top : (logoShowing ? logo.getBounds(_componentsLayer).top : 0) ) - bounds.y);
+				bounds.height = Math.round(0 - bounds.y);
 			}
 			
 			return bounds;
