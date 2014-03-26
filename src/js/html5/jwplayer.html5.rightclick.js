@@ -8,8 +8,8 @@
 	var utils = jwplayer.utils,
 		_css = utils.css,
 
-		ABOUT_DEFAULT = "About JW Player ",
-		LINK_DEFAULT = "http://www.longtailvideo.com/jwpabout/?a=r&v=",
+		ABOUT_DEFAULT = "MyDMAM JW Player...",
+		LINK_DEFAULT = "http://mydmam.org/developments/jwplayer-licence/",
 
 		DOCUMENT = document,
 		RC_CLASS = ".jwclick",
@@ -25,8 +25,8 @@
 		var _api = api,
 			_container,// = DOCUMENT.getElementById(_api.id),
 			_config = utils.extend({
-				aboutlink: LINK_DEFAULT+html5.version+'&m=h&e=o',
-				abouttext: ABOUT_DEFAULT + html5.version + '...'
+				aboutlink: LINK_DEFAULT,
+				abouttext: ABOUT_DEFAULT
 			}, config),
 			_mouseOverContext = false,
 			_menu,

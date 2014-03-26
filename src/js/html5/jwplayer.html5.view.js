@@ -65,8 +65,6 @@
 			_controlbar,
 			_display,
 			_dock,
-			_logo,
-			_logoConfig = utils.extend({}, _model.componentConfig("logo")),
 			_captions,
 			_playlist,
 			_audioMode,
@@ -201,7 +199,6 @@
 			} 
 			_componentFadeListeners(_controlbar);
 			_componentFadeListeners(_dock);
-			_componentFadeListeners(_logo);
 
 			_css('#' + _playerElement.id + '.' + ASPECT_MODE + " ." + VIEW_ASPECT_CONTAINER_CLASS, {
 				"margin-top": _model.aspectratio,
@@ -327,9 +324,6 @@
 				});
 			if (_audioMode) _display.hidePreview(TRUE);
 			_controlsLayer.appendChild(_display.element());
-			
-			_logo = new html5.logo(_api, _logoConfig);
-			_controlsLayer.appendChild(_logo.element());
 			
 			_dock = new html5.dock(_api, _model.componentConfig('dock'));
 			_controlsLayer.appendChild(_dock.element());
@@ -484,14 +478,6 @@
 			if (_controlbar) {
 				_controlbar.redraw(TRUE);
 			}
-			if (_logo) {
-				_logo.offset(_controlbar && _logo.position().indexOf("bottom") >= 0 ? _controlbar.height() + _controlbar.margin() : 0);
-				setTimeout(function() {
-					if (_dock) {
-						_dock.offset(_logo.position() == "top-left" ? _logo.element().clientWidth + _logo.margin() : 0);
-					}
-				}, 500);
-			}
 			
 			_checkAudioMode(height);
 
@@ -537,9 +523,6 @@
 					_controlbar.audioMode(FALSE);
 					_updateState(_api.jwGetState());
 				}
-			}
-			if (_logo && _audioMode) {
-				_hideLogo();
 			}
 			_playerElement.style.backgroundColor = _audioMode ? 'transparent' : '#000';
 		}
@@ -668,13 +651,6 @@
 			}
 		}
 
-		function _showLogo() {
-			if (_logo && !_audioMode) _logo.show();
-		}
-		function _hideLogo() {
-			if (_logo && !_model.getVideo().audioMode()) _logo.hide(_audioMode);
-		}
-
 		function _showDisplay() {
 			if (_display && _model.controls && !_audioMode) {
 				if (!_isIPod || _api.jwGetState() == states.IDLE)
@@ -708,7 +684,6 @@
 
 			if (state != states.IDLE && state != states.PAUSED) {
 				_hideDock();
-				_hideLogo();
 			}
 		}
 
@@ -721,8 +696,6 @@
 					_showDock();
 				}
 			}
-			if (_logoConfig.hide) _showLogo();
-
 		}
 
 		function _showVideo(state) {
@@ -805,7 +778,6 @@
 						_controlbar.hideFullscreen(TRUE);
 					} 
 					_showDock();
-					_showLogo();
 				}
 				break;
 			case states.IDLE:
@@ -814,7 +786,6 @@
 					_display.hidePreview(FALSE);
 					_showDisplay();
 					_showDock();
-					_showLogo();	
 					if (_controlbar) _controlbar.hideFullscreen(FALSE);
 				}
 				break;
@@ -934,19 +905,14 @@
 				dispOffset = dispBounds.top,
 				cbBounds = _instreamMode ? _bounds(DOCUMENT.getElementById(_api.id + "_instream_controlbar")) : _bounds(_controlbar.element()),
 				dockButtons = _instreamMode ? false : (_dock.numButtons() > 0),
-				logoTop = (_logo.position().indexOf("top") === 0),
-				dockBounds,
-				logoBounds = _bounds(_logo.element());
+				dockBounds;
 			if (dockButtons) {
 				dockBounds = _bounds(_dock.element());
 				bounds.y = Math.max(0, dockBounds.bottom - dispOffset);
 			}
-			if (logoTop) {
-				bounds.y = Math.max(bounds.y, logoBounds.bottom - dispOffset);
-			}
 			bounds.width = dispBounds.width;
 			if (cbBounds.height) {
-				bounds.height = (logoTop ? cbBounds.top : logoBounds.top) - dispOffset - bounds.y;
+				bounds.height = cbBounds.top - dispOffset - bounds.y;
 			} else {
 				bounds.height = dispBounds.height - bounds.y;
 			}
