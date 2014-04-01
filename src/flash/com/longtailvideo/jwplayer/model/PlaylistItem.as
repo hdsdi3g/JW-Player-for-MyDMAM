@@ -280,6 +280,7 @@ package com.longtailvideo.jwplayer.model {
 				case "m4a": 
 				case "aac":
 				case "f4a":
+				case "m4r":
 					return "aac";
 					break;
 				case "mp3":

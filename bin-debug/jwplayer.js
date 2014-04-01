@@ -751,6 +751,7 @@ jwplayer.source = document.createElement("source");/**
 			"m4v": mimeMap[mp4],
 			"mov": mimeMap[mp4],
 			"m4a": mimeMap[aac],
+			"m4r": mimeMap[aac],
 			"f4a": mimeMap[aac],
 			"aac": mimeMap[aac],
 			"mp3": mimeMap[mp3],
@@ -767,6 +768,7 @@ jwplayer.source = document.createElement("source");/**
 			"f4v": video,
 			"mov": video,
 			"m4a": video,
+			"m4r": video,
 			"m4v": video,
 			"mp4": video,
 			"aac": video,
@@ -2550,7 +2552,7 @@ jwplayer.source = document.createElement("source");/**
 
 		function _embed() {
 			var file, image, youtube, i, playlist = params.playlist, item, sources,
-				types = ["mp4", "aac", "mp3"]; 
+				types = ["mp4", "aac", "mp3", "m4r", "m4a"]; 
 			if (playlist && playlist.length) {
 				item = playlist[0];
 				sources = item.sources;

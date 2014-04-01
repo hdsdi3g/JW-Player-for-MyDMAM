@@ -234,6 +234,7 @@
 					break;
 				case '.aac':
 				case '.m4a':
+				case '.m4r':
 				case '.f4a':
 					_type = 'aac';
 					parts[0].indexOf('mp4:') == 0 ? null: parts[0] = 'mp4:' + parts[0];

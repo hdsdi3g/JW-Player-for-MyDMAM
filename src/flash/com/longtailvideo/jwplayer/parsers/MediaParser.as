@@ -15,6 +15,8 @@ package com.longtailvideo.jwplayer.parsers {
 			ogg: "video/ogg",
 			webm: "video/webm",
 			aac: "audio/mp4",
+			m4a: "audio/mp4",
+			m4r: "audio/mp4",
 			mp3: "audio/mpeg",
 			hls: "application/vnd.apple.mpegurl"
 		};

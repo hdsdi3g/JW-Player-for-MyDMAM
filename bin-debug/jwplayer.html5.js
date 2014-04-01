@@ -8229,7 +8229,7 @@
         _this.audioMode = function() {
             if (!_levels) { return FALSE; }
             var type = _levels[0].type;
-            return (type == "aac" || type == "mp3" || type == "vorbis");
+            return (type == "aac" || type == "mp3" || type == "vorbis" || type == "m4r" || type == "m4a");
         };
 
         _this.setCurrentQuality = function(quality) {

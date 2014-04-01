@@ -22,6 +22,7 @@ package com.longtailvideo.jwplayer.parsers {
 				'jpg':'image',
 				'jpeg':'image',
 				'm4a':'video',
+				'm4r':'video',
 				'm4v':'video',
 				'mov':'video',
 				'mp3':'sound',

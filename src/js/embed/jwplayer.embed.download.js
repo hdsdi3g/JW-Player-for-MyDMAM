@@ -31,7 +31,7 @@
 
 		function _embed() {
 			var file, image, youtube, i, playlist = params.playlist, item, sources,
-				types = ["mp4", "aac", "mp3"]; 
+				types = ["mp4", "aac", "mp3", "m4r", "m4a"]; 
 			if (playlist && playlist.length) {
 				item = playlist[0];
 				sources = item.sources;
